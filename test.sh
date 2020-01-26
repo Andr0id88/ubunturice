@@ -1,8 +1,8 @@
 #!/bin/bash
 
 dotfilesrepo="https://github.com/Andr0id88/ubuntudots.git"
-
 progsfile="~/ubunturice/progs.csv"
+
 initialcheck() { apt update && apt upgrade dialog || { echo "Are you sure you're running this as the root user? Are you sure you're using an Arch-based distro? ;-) Are you sure you have an internet connection? Are you sure your Arch keyring is updated?"; exit; } ;}
 
 welcomemsg() { \
@@ -35,7 +35,7 @@ pipinstall() { \
 	}
 
 installationloop() { \
-	([ -f "$progsfile" ] && cp "$progsfile" /tmp/progs.csv) || curl -Ls "$progsfile" | sed '/^#/d' > ~/Documents/progs.csv
+	([ -f "$progsfile" ] && cp "$progsfile" /ubunturice/progs.csv) || curl -Ls "$progsfile" | sed '/^#/d' > ~/ubunturice/progs.csv
 	total=$(wc -l < /tmp/progs.csv)
 	while IFS=, read -r program comment; do
 	n=$((n+1))
@@ -45,7 +45,7 @@ installationloop() { \
 	"G") gitmakeinstall "$program" "$comment" ;;
 	"P") pipinstall "$program" "$comment" ;;
 	esac
-	done < ~/Documents/progs.csv ;}
+	done < ~/ubunturice/progs.csv ;}
 
 finalize(){ \
 	dialog --title "All done!" --msgbox "Congrats! Provided there were no hidden errors, the script completed successfully and all the programs and configuration files should be in place.\\n\\nTo run the new graphical environment, log out and log back in as your new user, then run the command \"startx\" to start the graphical environment (it will start automatically in tty1).\\n\\n.t Luke" 12 80
