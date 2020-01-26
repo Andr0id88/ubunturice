@@ -43,65 +43,15 @@ initialcheck
 # Welcome user.
 welcomemsg || { clear; exit; }
 
-# Get and verify username and password.
-getuserandpass
-
-# Give warning if user already exists.
-usercheck || { clear; exit; }
-
 # Last chance for user to back out before install.
 preinstallmsg || { clear; exit; }
 
 ### The rest of the script requires no user input.
-
-adduserandpass
-
-# Refresh Arch keyrings.
-refreshkeys
-
-# Allow user to run sudo without password. Since AUR programs must be installed
-# in a fakeroot environment, this is required for all builds with AUR.
-newperms "%wheel ALL=(ALL) NOPASSWD: ALL"
-
-dialog --title "KARBS Installation" --infobox "Installing \`basedevel\` and \`git\` for installing other software." 5 70
-pacman --noconfirm --needed -S base-devel git >/dev/null 2>&1
-
-manualinstall $aurhelper
 
 # The command that does all the installing. Reads the progs.csv file and
 # installs each needed program the way required. Be sure to run this only after
 # the user has been created and has priviledges to run sudo without a password
 # and all build dependencies are installed.
 installationloop
-welcomemsg
-preinstallmsg
-maininstall
-installationloop
 finalize
-
-# Install programs from progs.csv
-# OLDIFSS=$IFS
-# IFS=","
-
-# while read programs
-#  do
-# 	 apt-get install -y $programs >/dev/null 2>&1
-# 	 echo "installing $programs"
-# done < progs.csv
-# IFS=$OLDIFS
-
-
-
-
-
-
-# Setup plugged for nvim
-# curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
-# https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
-# # Update\install all vim plugins
-# nvim -E -c "PlugUpdate|visual|q|q"
-
-# # Unsure if this will work or not, it is supposed to UpdateRemotePlugins to make Ultisnips work.
-# nvim -E -c "UpdateRemotePlugins|visual|q|q"
 clear

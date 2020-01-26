@@ -1,0 +1,25 @@
+# Install programs from progs.csv
+# OLDIFSS=$IFS
+# IFS=","
+
+# while read programs
+#  do
+# 	 apt-get install -y $programs >/dev/null 2>&1
+# 	 echo "installing $programs"
+# done < progs.csv
+# IFS=$OLDIFS
+
+
+
+
+
+
+# Setup plugged for nvim
+# curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+# https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+# # Update\install all vim plugins
+# nvim -E -c "PlugUpdate|visual|q|q"
+
+# # Unsure if this will work or not, it is supposed to UpdateRemotePlugins to make Ultisnips work.
+# nvim -E -c "UpdateRemotePlugins|visual|q|q"
