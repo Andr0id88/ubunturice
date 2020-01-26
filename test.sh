@@ -35,8 +35,8 @@ pipinstall() { \
 	}
 
 installationloop() { \
-	([ -f "$progsfile" ] && cp "$progsfile" /ubunturice/progs.csv) || curl -Ls "$progsfile" | sed '/^#/d' > ~/ubunturice/progs.csv
-	total=$(wc -l < /tmp/progs.csv)
+	([ -f "$progsfile" ] && cp "$progsfile" $HOME/ubunturice/progs.csv) || curl -Ls "$progsfile" | sed '/^#/d' > $HOME/ubunturice/progs.csv
+	total=$(wc -l < $HOME/ubunturice/progs.csv)
 	while IFS=, read -r tag program comment; do
 	n=$((n+1))
 	echo "$comment" | grep "^\".*\"$" >/dev/null && comment="$(echo "$comment" | sed "s/\(^\"\|\"$\)//g")"
@@ -45,7 +45,7 @@ installationloop() { \
 	"G") gitmakeinstall "$program" "$comment" ;;
 	"P") pipinstall "$program" "$comment" ;;
 	esac
-	done < ~/ubunturice/progs.csv ;}
+	done < $HOME/ubunturice/progs.csv ;}
 
 finalize(){ \
 	dialog --title "All done!" --msgbox "Congrats! Provided there were no hidden errors, the script completed successfully and all the programs and configuration files should be in place.\\n\\nTo run the new graphical environment, log out and log back in as your new user, then run the command \"startx\" to start the graphical environment (it will start automatically in tty1).\\n\\n.t Luke" 12 80
