@@ -1,19 +1,10 @@
 [ -z "$dotfilesrepo" ] && dotfilesrepo="https://github.com/lukesmithxyz/voidrice.git"
-[ -z "$progsfile" ] && progsfile="https://raw.githubusercontent.com/LukeSmithxyz/LARBS/master/progs.csv"
+[ -z "$progsfile" ] && progsfile="https://raw.githubusercontent.com/Andr0id88/ubunturice/blob/master/progs.csv"
 
-if type xbps-install >/dev/null 2>&1; then
-	installpkg(){ xbps-install -y "$1" >/dev/null 2>&1 ;}
-	grepseq="\"^[PGV]*,\""
-elif type apt >/dev/null 2>&1; then
-	installpkg(){ apt-get install -y "$1" >/dev/null 2>&1 ;}
-	grepseq="\"^[PGU]*,\""
-else
-	installpkg(){ pacman --noconfirm --needed -S "$1" >/dev/null 2>&1 ;}
-	grepseq="\"^[PGA]*,\""
-fi
+installpkg(){ apt-get install -y "$1" >/dev/null 2>&1 ;}
+grepseq="\"^[PGU]*,\""
 
-error() { clear; printf "ERROR:\\n%s\\n" "$1"; exit;}
-
+# error() { clear; printf "ERROR:\\n%s\\n" "$1"; exit;}
 installationloop() { \
 	([ -f "$progsfile" ] && cp "$progsfile" /tmp/progs.csv) || curl -Ls "$progsfile" | sed '/^#/d' | eval grep "$grepseq" > /tmp/progs.csv
 	total=$(wc -l < /tmp/progs.csv)
@@ -59,9 +50,9 @@ installationloop() { \
 installationloop
 
 # Install the dotfiles in the user's home directory
-putgitrepo "$dotfilesrepo" "/home/$name" "$repobranch"
-rm -f "/home/$name/README.md" "/home/$name/LICENSE"
+# putgitrepo "$dotfilesrepo" "/home/$name" "$repobranch"
+# rm -f "/home/$name/README.md" "/home/$name/LICENSE"
 
 # Last message! Install complete!
-finalize
-clear
+# finalize
+# clear
