@@ -23,12 +23,12 @@ maininstall() { # Installs all needed programs from main repo.
 installationloop() { \
 	([ -f "$progsfile" ] && cp "$progsfile" /tmp/progs.csv) || curl -Ls "$progsfile" | sed '/^#/d' > /tmp/progs.csv
 	total=$(wc -l < /tmp/progs.csv)
-	while IFS=, read -r tag program comment; do
+	while IFS=, read -r program comment; do
 	n=$((n+1))
 	echo "$comment" | grep "^\".*\"$" >/dev/null && comment="$(echo "$comment" | sed "s/\(^\"\|\"$\)//g")"
 	maininstall "$program" "$comment"
 	done < /tmp/progs.csv
-
+}
 finalize(){ \
 	dialog --title "All done!" --msgbox "Congrats! Provided there were no hidden errors, the script completed successfully and all the programs and configuration files should be in place.\\n\\nTo run the new graphical environment, log out and log back in as your new user, then run the command \"startx\" to start the graphical environment (it will start automatically in tty1).\\n\\n.t Luke" 12 80
 	}
