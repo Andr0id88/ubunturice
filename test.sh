@@ -1,7 +1,7 @@
 #!/bin/bash
 
 dotfilesrepo="https://github.com/Andr0id88/ubuntudots.git"
-progsfile="~/ubunturice/progs.csv"
+progsfile="$HOME/ubunturice/progs.csv"
 
 initialcheck() { apt update && apt upgrade dialog || { echo "Are you sure you're running this as the root user? Are you sure you're using an Arch-based distro? ;-) Are you sure you have an internet connection? Are you sure your Arch keyring is updated?"; exit; } ;}
 
@@ -37,7 +37,7 @@ pipinstall() { \
 installationloop() { \
 	([ -f "$progsfile" ] && cp "$progsfile" /ubunturice/progs.csv) || curl -Ls "$progsfile" | sed '/^#/d' > ~/ubunturice/progs.csv
 	total=$(wc -l < /tmp/progs.csv)
-	while IFS=, read -r program comment; do
+	while IFS=, read -r tag program comment; do
 	n=$((n+1))
 	echo "$comment" | grep "^\".*\"$" >/dev/null && comment="$(echo "$comment" | sed "s/\(^\"\|\"$\)//g")"
 	case "$tag" in
