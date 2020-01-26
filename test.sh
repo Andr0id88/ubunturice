@@ -35,18 +35,17 @@ pipinstall() { \
 	}
 
 installationloop() { \
+	total=$(wc -l < progs.csv)
+	while IFS=, read -r tag program comment; do
+	n=$((n+1))
+	echo "$comment" | grep "^\".*\"$" >/dev/null && comment="$(echo "$comment" | sed "s/\(^\"\|\"$\)//g")"
+	case "$tag" in
+	"") maininstall "$program" "$comment" ;;
+	"G") gitmakeinstall "$program" "$comment" ;;
+	"P") pipinstall "$program" "$comment" ;;
+	esac
+	done < progs.csv ;}
 
-Install programs from progs.csv
-OLDIFSS=$IFS
-IFS=","
-
-while read programs
- do
-	 apt-get install -y $programs >/dev/null 2>&1
-	 echo "installing $programs"
-done < progs.csv
-IFS=$OLDIFS
-}
 finalize(){ \
 	dialog --title "All done!" --msgbox "Congrats! Provided there were no hidden errors, the script completed successfully and all the programs and configuration files should be in place.\\n\\nTo run the new graphical environment, log out and log back in as your new user, then run the command \"startx\" to start the graphical environment (it will start automatically in tty1).\\n\\n.t Luke" 12 80
 	}

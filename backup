@@ -10,6 +10,17 @@
 # IFS=$OLDIFS
 
 
+# Install programs from progs.csv
+OLDIFSS=$IFS
+IFS=","
+
+while read programs
+ do
+	 apt-get install -y $programs >/dev/null 2>&1
+	 echo "installing $programs"
+done < progs.csv
+IFS=$OLDIFS
+}
 
 
 
