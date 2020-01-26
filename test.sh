@@ -20,14 +20,33 @@ maininstall() { # Installs all needed programs from main repo.
 	}
 
 
+gitmakeinstall() {
+	dir=$(mktemp -d)
+	dialog --title "KARBS Installation" --infobox "Installing \`$(basename "$1")\` ($n of $total) via \`git\` and \`make\`. $(basename "$1") $2" 5 70
+	git clone --depth 1 "$1" "$dir" >/dev/null 2>&1
+	cd "$dir" || exit
+	make >/dev/null 2>&1
+	make install >/dev/null 2>&1
+	cd /tmp || return ;}
+
+pipinstall() { \
+	dialog --title "KARBS Installation" --infobox "Installing the Python package \`$1\` ($n of $total). $1 $2" 5 70
+	command -v pip || apt install python-pip >/dev/null 2>&1
+	yes | pip install "$1"
+	}
+
 installationloop() { \
 	([ -f "$progsfile" ] && cp "$progsfile" /tmp/progs.csv) || curl -Ls "$progsfile" | sed '/^#/d' > /tmp/progs.csv
 	total=$(wc -l < /tmp/progs.csv)
 	while IFS=, read -r program comment; do
 	n=$((n+1))
 	echo "$comment" | grep "^\".*\"$" >/dev/null && comment="$(echo "$comment" | sed "s/\(^\"\|\"$\)//g")"
-	maininstall "$program" "$comment"
-	done < /tmp/progs.csv
+	case "$tag" in
+	"") maininstall "$program" "$comment" ;;
+	"G") gitmakeinstall "$program" "$comment" ;;
+	"P") pipinstall "$program" "$comment" ;;
+	esac
+	done < /tmp/progs.csv ;}
 }
 finalize(){ \
 	dialog --title "All done!" --msgbox "Congrats! Provided there were no hidden errors, the script completed successfully and all the programs and configuration files should be in place.\\n\\nTo run the new graphical environment, log out and log back in as your new user, then run the command \"startx\" to start the graphical environment (it will start automatically in tty1).\\n\\n.t Luke" 12 80

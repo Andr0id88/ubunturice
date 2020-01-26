@@ -1,11 +1,11 @@
-htop
-vim
-neovim
-glances
-i3-wm
-i3status
-i3blocks
-yadm
-zsh
-ranger
-surfraw
+,htop,"Program to show system info"
+,vim,"Superb text editor"
+,neovim,"Text Editor"
+,glances,"System Info"
+,i3-wm,"Window Manager"
+,i3status,"Statusbar for I3"
+,i3blocks,"System bar for I3"
+,yadm,"Config file manager"
+,zsh,"Best shell there is"
+,ranger,"Best file manager there is"
+,surfraw,"Superb bookmark manager"
