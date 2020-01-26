@@ -2,7 +2,7 @@
 
 dotfilesrepo="https://github.com/Andr0id88/ubuntudots.git"
 
-progsfile="./progs.csv"
+progsfile="~/ubunturice/progs.csv"
 initialcheck() { apt update && apt upgrade dialog || { echo "Are you sure you're running this as the root user? Are you sure you're using an Arch-based distro? ;-) Are you sure you have an internet connection? Are you sure your Arch keyring is updated?"; exit; } ;}
 
 welcomemsg() { \
