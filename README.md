@@ -1,5 +1,8 @@
 # Ubuntu18-setup
 
-Use the following command to run the script easily in one run:
+Run the install.sh to run the installation, the programs it will install are located in progs.csv.
 
-wget https://raw.githubusercontent.com/ChrisTitusTech/Ubuntu18-setup/master/setup.sh && sudo chmod +x setup.sh && ./setup.sh
+##New to Linux?
+Have no fear just run this command on a freshly installed ubuntu system:
+wget https://raw.githubusercontent.com/Andr0id88/ubunturice/master/install.sh && sudo chmod +x install.sh && ./install.sh
+
