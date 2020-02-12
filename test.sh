@@ -46,6 +46,15 @@ installationloop() { \
 	esac
 	done < progs.csv ;}
 
+putgitrepo() { # Downlods a gitrepo $1 and places the files in $2 only overwriting conflicts
+	dialog --infobox "Downloading and installing config files..." 4 60
+	dir=$(mktemp -d)
+	chown -R "$name":wheel "$dir"
+	sudo -u "$name" git clone --depth 1 "$1" "$dir"/gitrepo >/dev/null 2>&1 &&
+	sudo -u "$name" mkdir -p "$2" &&
+	sudo -u "$name" cp -rT "$dir"/gitrepo "$2"
+	}
+
 finalize(){ \
 	dialog --title "All done!" --msgbox "Congrats! Provided there were no hidden errors, the script completed successfully and all the programs and configuration files should be in place.\\n\\nTo run the new graphical environment, log out and log back in as your new user, then run the command \"startx\" to start the graphical environment (it will start automatically in tty1).\\n\\n.t Luke" 12 80
 	}
